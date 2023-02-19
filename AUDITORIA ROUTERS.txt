@@ -1,0 +1,79 @@
+ROUTER 1
+-------------------------------------------
+enable
+configure terminal
+hostname R1
+username decimal privilege 15 secret 666
+line vty 0 15
+login local
+transport input telnet
+
+
+enable
+configure terminal
+hostname R3
+username unnamed privilege 15 secret 666
+line vty 0 15
+login local
+transport input telnet1
+
+
+(en el command prompt (PC>telnet 172.31.62.1)) 
+
+ROUTER 2
+--------------------------------------------
+enable
+configure terminal
+hostname R2
+ip domain-name tecnosur
+crypto key generate rsa
+
+//(colocamos 1024 y ENTER)//
+
+ip ssh version 2
+line vty 0 15
+transport input ssh
+login local
+exit
+username dona privilege 15 secret 777
+
+
+(en el command prompt (PC>ssh -l(L)dona 172.31.62.129)) 
+
+------------------------------------------------------
+SUBNETEO ROUTER A
+------------------------------------------------------
+ena
+conf t
+router rip
+version 2
+net 172.31.62.0
+net 172.31.62.64
+------------------------------------------------------
+SUBNETEO ROUTER B
+------------------------------------------------------
+ena
+conf t
+router rip
+version 2
+net 172.31.62.128
+net 172.31.62.64
+
+
+ena
+conf t
+router rip
+version 2
+net 172.31.62.193
+net 172.31.62.64
+
+
+
+
+
+
+
+
+
+
+
